@@ -6,26 +6,34 @@ Installing on OSX
 
 1). Open a terminal and install node (Make sure Homebrew is already installed)
 
-```brew install node```
+```
+brew install node
+```
 
 
 2). Install serverless 
 
-```npm install -g serverless```
+```
+npm install -g serverless
+```
 
 
 Installing on Linux
 
 3). Install node and npm
 
-```sudo apt-get update
+```
+sudo apt-get update
 sudo apt-get install nodejs
-sudo apt-get install npm```
+sudo apt-get install npm
+```
 
 
 4). Install serverless
 
-```npm install -g serverless```
+```
+npm install -g serverless
+```
 
 
 5).** **Type **_‘serverless’_**** **or **_‘sls’_** within your terminal to confirm that serverless is now installed. This will show a list of all serverless commands.
@@ -42,7 +50,9 @@ sudo apt-get install npm```
 
 9). Configure serverless using the username (*serverless-admin*) and access keys you just downloaded
 
-```serverless config credentials --provider aws --key [XXX] --secret [YYY] --profile serverless-admin```
+```
+serverless config credentials --provider aws --key [XXX] --secret [YYY] --profile serverless-admin
+```
 
 
 You should now see Serverless starting the setup within your AWS account and will also save the credentials to your local drive
@@ -53,12 +63,16 @@ You should now see Serverless starting the setup within your AWS account and wil
 
 10). Create a new directory where you will save all of your serverless code and functions in a location of your choice (best practice)
 
-```mkdir ~/serverless_code && cd ~/serverless_code```
+```
+mkdir ~/serverless_code && cd ~/serverless_code
+```
 
 
 11). Start by creating a python template for your project. The path name should properly identify the project you’re working (For this tutorial, I will name it *pycon-ng*)
 
-```sls create --template aws-python --path pycon-ng```
+```
+sls create --template aws-python --path pycon-ng
+```
 
 
 ![image alt text](image_3.png)
@@ -79,13 +93,14 @@ The **handler.py** file is the main file which contains all the python code whic
 
 * For this example, I will replace the sample code with a function which takes a name argument and prints and returns the name back to us.
 
-	
+  
 
 **Before:**
 
-	
+  
 
-```import json
+```
+import json
 
 
 def hello(event, context):
@@ -108,12 +123,14 @@ def hello(event, context):
        "message": "Go Serverless v1.0! Your function executed successfully!",
        "event": event
    }
-   """```
+   """
+```
 
 
 **After:**
 
-```import json
+```
+import json
 
 
 def hello(event, context):
@@ -121,7 +138,8 @@ def hello(event, context):
    name = event['name']
 
    print "Hi {0}!!".format(name)
-   return "Welcome to Serverless, {0}!!".format(name)```
+   return "Welcome to Serverless, {0}!!".format(name)
+```
 
 
 12). If you have only one AWS credential configured on your local drive, there is no need to make any changes to the **serverless.yml** file. However, if you have multiple credentials, add the corresponding profile name as shown below.
@@ -130,12 +148,16 @@ def hello(event, context):
 
 13). Make sure that your terminal is currently is in the directory with the lambda code
 
-```cd ~/serverless_code/pycon-ng```
+```
+cd ~/serverless_code/pycon-ng
+```
 
 
 14). Deploy the Serverless code to AWS
 
-```sls deploy -v```
+```
+sls deploy -v
+```
 
 
 15). The deploy process should take about a minute and you will see all the configurations that serverless is setting up within your AWS environment (e.g. cloudformation, S3, IAM, Lambda etc.)
@@ -156,13 +178,13 @@ def hello(event, context):
 
 19). Enter a name for your test values in the Event name field and replace the sample test data with correct details needed to test your function and save.
 
-	Before:
+  Before:
 
-	![image alt text](image_10.png)
+  ![image alt text](image_10.png)
 
-	After:
+  After:
 
-	![image alt text](image_11.png)
+  ![image alt text](image_11.png)
 
 20). Run the test using the configured test event and you should get a success message.
 
@@ -172,22 +194,30 @@ def hello(event, context):
 
 21). To invoke a deployed function locally
 
-```sls invoke --function <function_name>```
+```
+sls invoke --function <function_name>
+```
 
 
 22). To invoke the function with logs
 
-```sls invoke --function <function_name> -l ```
+```
+sls invoke --function <function_name> -l 
+```
 
 
 23). To invoke the function in local mode (testing before deployment)
 
-```sls invoke local --function <function_name>```
+```
+sls invoke local --function <function_name>
+```
 
 
 24). To invoke the function and pass data to the function
 
-```sls invoke --function <function_name> -l --data '{"key":"value"}'```
+```
+sls invoke --function <function_name> -l --data '{"key":"value"}'
+```
 
 
 **EXAMPLE:** Invoking the previously deployed function
@@ -200,17 +230,23 @@ There are many scenarios where you may need to make changes to the Serverless pr
 
 25). If you make changes within the handler.py file ONLY and you want to update a single function
 
-```sls deploy function -f <function_name>```
+```
+sls deploy function -f <function_name>
+```
 
 
 26). To update the whole project (especially after making changes to both the **handler.py** and **serverless.yml** files)
 
-```sls deploy -v```
+```
+sls deploy -v
+```
 
 
 27). To remove/delete your Serverless project from AWS
 
-```sls remove```
+```
+sls remove
+```
 
 
 ##### **E. CREATING AN ADVANCED SERVERLESS FUNCTION USING SNS**
@@ -221,7 +257,8 @@ There are many scenarios where you may need to make changes to the Serverless pr
 
 **Before:**
 
-```import json
+```
+import json
 
 
 def hello(event, context):
@@ -229,12 +266,14 @@ def hello(event, context):
    name = event['name']
 
    print "Hi {0}!!".format(name)
-   return "Welcome to Serverless, {0}!!".format(name)```
+   return "Welcome to Serverless, {0}!!".format(name)
+```
 
 
 **After:**
 
-```from __future__ import print_function
+```
+from __future__ import print_function
 import json
 import urllib
 import boto3
@@ -251,7 +290,8 @@ def send_to_sns(message, context):
        Message=message['body']
    )
   
-   return (message['body'] + " published to " + message['topic'])```
+   return (message['body'] + " published to " + message['topic'])
+```
 
 
 Note that the function name has changed from **_hello()_** to **_send_to_sns()_** and the function argument "event" has been changed to “message”
@@ -280,13 +320,13 @@ Note that the service key indicates the name of your project (i.e. pycon-ng)
 
 * Given that our function name is no longer hello(), we need to change it to the current function name.
 
-	
+  
 
-	Before:
+  Before:
 
-	![image alt text](image_16.png)
+  ![image alt text](image_16.png)
 
-	After:
+  After:
 
 ![image alt text](image_17.png)
 
@@ -294,7 +334,9 @@ Note that the service key indicates the name of your project (i.e. pycon-ng)
 
 31). From within the directory, type ‘sls deploy -v’ to deploy your project
 
-```sls deploy -v```
+```
+sls deploy -v
+```
 
 
 32). You should now see the function created in your lambda functions page
@@ -327,7 +369,9 @@ Note that the service key indicates the name of your project (i.e. pycon-ng)
 
 35). In order to make configuration changes to the Serverless project, I will first delete/remove our project from the AWS environment
 
-```sls remove```
+```
+sls remove
+```
 
 
 21). In the** serverless.yml **file, we need to add the correct IAM policies in order to allow our function to publish messages to SNS.
@@ -338,7 +382,9 @@ Note that the service key indicates the name of your project (i.e. pycon-ng)
 
 36). Save the **serverless.yml** file and re-deploy your Serverless project 
 
-```sls deploy -v```
+```
+sls deploy -v
+```
 
 
 37). After the deployment has been completed, you can confirm that the role has the assigned policy
@@ -357,7 +403,8 @@ Note that the service key indicates the name of your project (i.e. pycon-ng)
 
 39). For this section, we will replace the function within the **handler.py** file with a function which will insert records into a RDS database
 
-```import json
+```
+import json
 import sys
 import logging
 import pymysql
@@ -396,7 +443,8 @@ def insert_to_table(event, context):
    VALUES
    (1, 'Jide', 'Ogunjobi');
    """
-   insert = run_query(query)```
+   insert = run_query(query)
+```
 
 
 * You will notice in new lambda function is that line 4 is importing **pymysql** which is an external package
@@ -405,7 +453,9 @@ def insert_to_table(event, context):
 
 Run:
 
-```npm init```
+```
+npm init
+```
 
 
 This will ask you for some questions. Accept all the defaults
@@ -416,7 +466,9 @@ This will create a **package.json** file within your directory
 
 Now run:
 
-```npm install --save serverless-python-requirements```
+```
+npm install --save serverless-python-requirements
+```
 
 
 ![image alt text](image_27.png)
@@ -443,7 +495,9 @@ NOTE: If you are on a linux system, chna
 
 44). Deploy your project
 
-```sls deploy -v```
+```
+sls deploy -v
+```
 
 
 45). Notice that the lambda function name will be different since we changed the function and handler names
@@ -453,5 +507,4 @@ NOTE: If you are on a linux system, chna
 46). Open up the function it will reveal that there are some external packages 
 
 ![image alt text](image_33.png)
-
 
