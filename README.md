@@ -1,4 +1,3 @@
-[[TOC]]
 
 ##### **A. INSTALLING SERVERLESS**
 
@@ -40,11 +39,11 @@ npm install -g serverless
 
 6). Within AWS IAM, create a new user called **_serveless-admin_** with programmatic access (*Make sure you have access to make changes to IAM within your AWS accoun*t)
 
-![image alt text](image_0.png)
+![image alt text](images/image_0.png)
 
 7). Attach administrator access to this user. If you do not want to give full access to serverless, you can select the AWS services that you know that you will need.
 
-![image alt text](image_1.png)
+![image alt text](images/image_1.png)
 
 8). Download your credentials file with Access Key and Secret Access Key ID and save in a safe location
 
@@ -57,7 +56,7 @@ serverless config credentials --provider aws --key [XXX] --secret [YYY] --profil
 
 You should now see Serverless starting the setup within your AWS account and will also save the credentials to your local drive
 
-![image alt text](image_2.png)
+![image alt text](images/image_2.png)
 
 ##### **B. CREATING A SIMPLE LAMBDA FUNCTION**
 
@@ -75,11 +74,11 @@ sls create --template aws-python --path pycon-ng
 ```
 
 
-![image alt text](image_3.png)
+![image alt text](images/image_3.png)
 
 9). Type *‘ls’* and you should see a directory called *pycon-ng*. *‘cd’* into that directory and type *‘ls’* again and you should see a **handler.py** file, a **serverless.yml** file and a .gitignore file
 
-![image alt text](image_4.png)
+![image alt text](images/image_4.png)
 
 The **handler.py** file is the main file which contains all the python code which will be executed while the **serverless.yml** file is the configuration which will be used to configure all the AWS services needed to successfully execute the function
 
@@ -144,7 +143,7 @@ def hello(event, context):
 
 12). If you have only one AWS credential configured on your local drive, there is no need to make any changes to the **serverless.yml** file. However, if you have multiple credentials, add the corresponding profile name as shown below.
 
-![image alt text](image_5.png)
+![image alt text](images/image_5.png)
 
 13). Make sure that your terminal is currently is in the directory with the lambda code
 
@@ -162,33 +161,33 @@ sls deploy -v
 
 15). The deploy process should take about a minute and you will see all the configurations that serverless is setting up within your AWS environment (e.g. cloudformation, S3, IAM, Lambda etc.)
 
-![image alt text](image_6.png)
+![image alt text](images/image_6.png)
 
 16). You should now see the function created in your lambda functions page
 
-![image alt text](image_7.png)
+![image alt text](images/image_7.png)
 
 17). Click the newly created function and you should see that it has the same content that was created in the **handler.py** file
 
-![image alt text](image_8.png)
+![image alt text](images/image_8.png)
 
 18). To test that the function is working as expected, click the dropdown next to the test button at the top right hand of the page and select "Configure test events"
 
-![image alt text](image_9.png)
+![image alt text](images/image_9.png)
 
 19). Enter a name for your test values in the Event name field and replace the sample test data with correct details needed to test your function and save.
 
   Before:
 
-  ![image alt text](image_10.png)
+  ![image alt text](images/image_10.png)
 
   After:
 
-  ![image alt text](image_11.png)
+  ![image alt text](images/image_11.png)
 
 20). Run the test using the configured test event and you should get a success message.
 
-![image alt text](image_12.png)
+![image alt text](images/image_12.png)
 
 ##### **C. INVOKING SERVERLESS FUNCTIONS IN AWS FROM YOUR LOCAL DRIVE**
 
@@ -222,7 +221,7 @@ sls invoke --function <function_name> -l --data '{"key":"value"}'
 
 **EXAMPLE:** Invoking the previously deployed function
 
-![image alt text](image_13.png)
+![image alt text](images/image_13.png)
 
 ##### **D. UPDATING AND DELETING YOUR SERVERLESS CODE WITHIN AWS**
 
@@ -306,11 +305,11 @@ Note that the function name has changed from **_hello()_** to **_send_to_sns()_*
 
 Before:
 
-![image alt text](image_14.png)
+![image alt text](images/image_14.png)
 
 After:
 
-![image alt text](image_15.png)
+![image alt text](images/image_15.png)
 
 Note that the service key indicates the name of your project (i.e. pycon-ng)
 
@@ -324,11 +323,11 @@ Note that the service key indicates the name of your project (i.e. pycon-ng)
 
   Before:
 
-  ![image alt text](image_16.png)
+  ![image alt text](images/image_16.png)
 
   After:
 
-![image alt text](image_17.png)
+![image alt text](images/image_17.png)
 
 **Explanation:** Within the serverless.yml file, we add the new function (from the handler.py file) that we want to use to create the lambda function and then pass what we want the name of the handler should be within AWS lambda
 
@@ -341,23 +340,23 @@ sls deploy -v
 
 32). You should now see the function created in your lambda functions page
 
-![image alt text](image_18.png)
+![image alt text](images/image_18.png)
 
 33). If you open the function, you will see that it is the same function that we copied into the **handler.py** file
 
-![image alt text](image_19.png)
+![image alt text](images/image_19.png)
 
 34). In order to test that this lambda function is working correctly, I set up a simple SNS topic (which will be deleted after this tutorial 
 
-![image alt text](image_20.png)
+![image alt text](images/image_20.png)
 
 * Testing the lambda function with the sns ARN details
 
-![image alt text](image_21.png)
+![image alt text](images/image_21.png)
 
 * When a test is run with the configured SNS topic, you should experience an error
 
-![image alt text](image_22.png)
+![image alt text](images/image_22.png)
 
 * The reason for the failure is due to the fact that the lambda function that we created does not have the required access needed to publish messages to the SNS topic.
 
@@ -376,7 +375,7 @@ sls remove
 
 21). In the** serverless.yml **file, we need to add the correct IAM policies in order to allow our function to publish messages to SNS.
 
- ![image alt text](image_23.png)
+ ![image alt text](images/image_23.png)
 
 * Adding this IAM role statement to the **serverless.yml** file will give the role created by Serverless full access to ALL SNS topics. (you can make updates to the statement if you want to provide access to only one or more topics)
 
@@ -389,11 +388,11 @@ sls deploy -v
 
 37). After the deployment has been completed, you can confirm that the role has the assigned policy
 
-![image alt text](image_24.png)
+![image alt text](images/image_24.png)
 
 38). Now, when we go to retest the lambda function, we should have better results
 
-![image alt text](image_25.png)
+![image alt text](images/image_25.png)
 
 ##### **G. BONUS: CREATING AN ADVANCED PYTHON FUNCTION (WITH ADDITIONAL PACKAGES)**
 
@@ -460,7 +459,7 @@ npm init
 
 This will ask you for some questions. Accept all the defaults
 
-![image alt text](image_26.png)
+![image alt text](images/image_26.png)
 
 This will create a **package.json** file within your directory
 
@@ -471,27 +470,27 @@ npm install --save serverless-python-requirements
 ```
 
 
-![image alt text](image_27.png)
+![image alt text](images/image_27.png)
 
 This will create an additional **node_modules** directory and a **package-lock.json** file.
 
 41). To configure our project to use the plugin, we need to add the following lines to the **serverless.yml** file
 
-![image alt text](image_28.png)
+![image alt text](images/image_28.png)
 
 NOTE: If you are on a linux system, chna
 
 42). Remember to also change the handler information for the new function 
 
-![image alt text](image_29.png)
+![image alt text](images/image_29.png)
 
 43). You will also need to create a **requirements.txt** file within our project directory and add the new **pymysql** package into it.
 
-![image alt text](image_30.png)
+![image alt text](images/image_30.png)
 
 44). Final directory structure
 
-![image alt text](image_31.png)
+![image alt text](images/image_31.png)
 
 44). Deploy your project
 
@@ -502,9 +501,9 @@ sls deploy -v
 
 45). Notice that the lambda function name will be different since we changed the function and handler names
 
-![image alt text](image_32.png)
+![image alt text](images/image_32.png)
 
 46). Open up the function it will reveal that there are some external packages 
 
-![image alt text](image_33.png)
+![image alt text](images/image_33.png)
 
