@@ -35,7 +35,7 @@ npm install -g serverless
 ```
 
 
-5).** **Type **_‘serverless’_**** **or **_‘sls’_** within your terminal to confirm that serverless is now installed. This will show a list of all serverless commands.
+5).Type **_‘serverless’_** or **_‘sls’_** within your terminal to confirm that serverless is now installed. This will show a list of all serverless commands.
 
 6). Within AWS IAM, create a new user called **_serveless-admin_** with programmatic access (*Make sure you have access to make changes to IAM within your AWS accoun*t)
 
@@ -297,11 +297,11 @@ Note that the function name has changed from **_hello()_** to **_send_to_sns()_*
 
 29). Go to the serverless.yml file and make the following config changes.
 
-* Under provider (line 20), we are going to add some more configurations
+* Under provider, we are going to add some more configurations
 
     * Profile: your IAM user for serverless (i.e. serverless-admin)
 
-    * Region: Region for your lambda functions (i.e. us-west-2)
+    * Region: Region for your lambda functions (i.e. us-east-1)
 
 Before:
 
@@ -478,7 +478,6 @@ This will create an additional **node_modules** directory and a **package-lock.j
 
 ![image alt text](images/image_28.png)
 
-NOTE: If you are on a linux system, chna
 
 42). Remember to also change the handler information for the new function 
 
